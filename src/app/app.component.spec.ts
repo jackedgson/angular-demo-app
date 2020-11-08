@@ -1,31 +1,57 @@
-import { TestBed } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http'
+import { TestBed } from '@angular/core/testing'
+import { ReactiveFormsModule } from '@angular/forms'
+import { AppComponent } from './app.component'
+import { GraphQLModule } from './graphql.module'
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
-  });
+      imports: [ReactiveFormsModule, GraphQLModule, HttpClientModule],
+      declarations: [AppComponent],
+    }).compileComponents()
+  })
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
+    const fixture = TestBed.createComponent(AppComponent)
+    const app = fixture.componentInstance
+    expect(app).toBeTruthy()
+  })
 
-  it(`should have as title 'angular-music-demo'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('angular-music-demo');
-  });
+  it('should render h1', () => {
+    const fixture = TestBed.createComponent(AppComponent)
+    fixture.detectChanges()
+    const compiled = fixture.nativeElement
+    expect(compiled.querySelector('header h1').textContent).toBeTruthy()
+  })
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('angular-music-demo app is running!');
-  });
-});
+  it('should render search form', () => {
+    const fixture = TestBed.createComponent(AppComponent)
+    fixture.detectChanges()
+    const compiled = fixture.nativeElement
+    expect(compiled.querySelector('header form').textContent).toBeTruthy()
+  })
+
+  it('button should be disabled without input', () => {
+    const fixture = TestBed.createComponent(AppComponent)
+    fixture.detectChanges()
+    const compiled = fixture.nativeElement
+    expect(compiled.querySelector('header form button').disabled).toBeTrue()
+  })
+
+  it('input with value should enable button', () => {
+    const fixture = TestBed.createComponent(AppComponent)
+    fixture.detectChanges()
+    fixture.whenStable().then(() => {
+      const compiled = fixture.nativeElement
+      let input = compiled.querySelector('header form input')
+
+      expect(input.value).toBe('')
+
+      input.value = 'Matt Corby'
+      input.dispatchEvent(new Event('input'))
+
+      expect(compiled.querySelector('header form button').disabled).toBeFalse()
+    })
+  })
+})
