@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { AppService } from '../app.service'
+import { ArtistModel } from '../graphql/artist'
 
 @Component({
   selector: 'app-albums',
@@ -7,7 +8,7 @@ import { AppService } from '../app.service'
   styleUrls: ['./albums.component.scss'],
 })
 export class AlbumsComponent implements OnInit {
-  artist: any
+  artist: ArtistModel | {}
   displayedColumns: string[] = ['cover', 'title', 'date', 'status']
 
   constructor(private appService: AppService) {}

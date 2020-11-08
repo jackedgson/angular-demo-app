@@ -16,12 +16,8 @@ export const ARTIST_QUERY = gql`
                   date
                   coverArtArchive {
                     front
-                    back
                   }
                   status
-                  lastFM {
-                    url
-                  }
                 }
               }
             }
