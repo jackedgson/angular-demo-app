@@ -1,19 +1,19 @@
 export interface ArtistModel {
   id: number
   name: string
-  releases: ReleasesModel[]
+  releases: {
+    edges: ReleaseModel[]
+  }
 }
 
-export interface ReleasesModel {
-  edges: {
-    node: {
-      id: number
-      title: string
-      date: string
-      coverArtArchive: {
-        front: string
-      }
-      status: string
+export interface ReleaseModel {
+  node: {
+    id: number
+    title: string
+    date: string
+    coverArtArchive: {
+      front: string
     }
+    status: string
   }
 }

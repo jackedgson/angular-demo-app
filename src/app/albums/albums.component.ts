@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { AppService } from '../app.service'
-import { ArtistModel } from '../graphql/artist'
+import { ArtistModel, ReleaseModel } from '../graphql/artist'
 
 @Component({
   selector: 'app-albums',
@@ -8,18 +8,18 @@ import { ArtistModel } from '../graphql/artist'
   styleUrls: ['./albums.component.scss'],
 })
 export class AlbumsComponent implements OnInit {
-  artist: ArtistModel | {}
+  artist: ArtistModel
   displayedColumns: string[] = ['cover', 'title', 'date', 'status']
 
   constructor(private appService: AppService) {}
 
   ngOnInit() {
-    this.appService.subscriber$.subscribe((data) => {
+    this.appService.subscriber$.subscribe((data: ArtistModel) => {
       this.artist = data
     })
   }
 
-  cleanData(data) {
+  cleanData(data: ReleaseModel[]) {
     return (
       data
         // remove releases without cover art
